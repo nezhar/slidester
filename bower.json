@@ -1,0 +1,26 @@
+{
+  "name": "jquery-slidester",
+  "license": "MIT",
+  "authors": [
+    "Harald Nezbeda <hn@nezhar.com>"
+  ],
+  "description": "A simple responsive jQuery slider plugin.",
+  "homepage": "http://nezhar.com",
+  "keywords": [
+    "slidester",
+    "jquery",
+    "plugin",
+    "slider",
+    "jquery-plugin",
+    "jquery-slider"
+  ],
+  "main": "src/jquery.slidester.js",
+  "dependencies": {
+    "jquery": "1"
+  },
+  "ignore": [
+    "npm-debug.log",
+    "bower_components",
+    "node_modules"
+  ]
+}

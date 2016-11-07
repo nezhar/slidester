@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>jQuery Slidester</title>
+        <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="../dist/css/slidester.css" media="screen">
+		<script src="../dist/js/jquery.slidester.js"></script>
+	</head>
+	<body>
+
+		<div id="element">
+            <img src="slides/1.jpg">
+            <img src="slides/2.jpg">
+            <img src="slides/3.jpg">
+            <img src="slides/4.jpg">
+            <img src="slides/5.jpg">
+            <img src="slides/6.jpg">
+        </div>
+
+		<script>
+			$( function() {
+				$( "#element" ).slidester( {
+					prop1: "a custom value"
+				} );
+			} );
+		</script>
+	</body>
+</html>
