@@ -119,5 +119,5 @@ module.exports = function( grunt ) {
     grunt.registerTask( "integrate", [ "jshint", "karma:integrate" ] );
 	grunt.registerTask( "lint", [ "jshint", "jscs" ] );
 	grunt.registerTask( "build", [ "concat", "uglify", "sass", "cssmin" ] );
-	grunt.registerTask( "default", [ "jshint", "build", "karma:dev" ] );
+	grunt.registerTask( "default", [ "build", "jshint", "karma:dev" ] );
 };

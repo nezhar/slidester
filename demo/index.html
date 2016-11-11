@@ -2,25 +2,127 @@
 <html>
 	<head>
 		<title>jQuery Slidester</title>
-        <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
+        <!-- slidester CSS and JS -->
         <link rel="stylesheet" type="text/css" href="../dist/css/slidester.css" media="screen">
 		<script src="../dist/js/jquery.slidester.js"></script>
+
+        <style>
+            .slider {
+                width: 500px;
+            }
+        </style>
 	</head>
 	<body>
-
-		<div id="element">
-            <img src="slides/1.jpg">
-            <img src="slides/2.jpg">
-            <img src="slides/3.jpg">
-            <img src="slides/4.jpg">
-            <img src="slides/5.jpg">
-            <img src="slides/6.jpg">
+		<div id="element1" class="slider">
+            <div class="images">
+                <img src="slides/1.jpg">
+                <img src="slides/2.jpg">
+                <img src="slides/3.jpg">
+                <img src="slides/4.jpg">
+                <img src="slides/5.jpg">
+                <img src="slides/6.jpg">
+            </div>
+            <div class="text_boxes">
+                <div class="text_box">
+    				<div class="text_box_top">
+    					<p>Lorem ipsum 1a</p>
+    				</div>
+                    <div class="text_box_bottom">
+    					<p>Lorem ipsum 2a</p>
+    				</div>
+    			</div>
+                <div class="text_box">
+    				<div class="text_box_top">
+    					<p>Lorem ipsum 1b</p>
+    				</div>
+                    <div class="text_box_bottom">
+    					<p>Lorem ipsum 2b</p>
+    				</div>
+    			</div>
+                <div class="text_box">
+    				<div class="text_box_top">
+    					<p>Lorem ipsum 1c</p>
+    				</div>
+                    <div class="text_box_bottom">
+    					<p>Lorem ipsum 2c</p>
+    				</div>
+    			</div>
+                <div class="text_box">
+    				<div class="text_box_top">
+    					<p>Lorem ipsum 1d</p>
+    				</div>
+                    <div class="text_box_bottom">
+    					<p>Lorem ipsum 2d</p>
+    				</div>
+    			</div>
+                <div class="text_box">
+    				<div class="text_box_top">
+    					<p>Lorem ipsum 1e</p>
+    				</div>
+                    <div class="text_box_bottom">
+    					<p>Lorem ipsum 2e</p>
+    				</div>
+    			</div>
+            </div>
+        </div>
+        
+        <div id="element2" class="slider">
+            <div class="images">
+                <img src="slides/6.jpg">
+                <img src="slides/3.jpg">
+                <img src="slides/4.jpg">
+                <img src="slides/5.jpg">
+            </div>
+            <div class="text_boxes">
+                <div class="text_box">
+                    <div class="text_box_top">
+                        <p>Lorem ipsum 1a</p>
+                    </div>
+                    <div class="text_box_bottom">
+                        <p>Lorem ipsum 2a</p>
+                    </div>
+                </div>
+                <div class="text_box">
+                    <div class="text_box_top">
+                        <p>Lorem ipsum 1b</p>
+                    </div>
+                    <div class="text_box_bottom">
+                        <p>Lorem ipsum 2b</p>
+                    </div>
+                </div>
+                <div class="text_box">
+                    <div class="text_box_top">
+                        <p>Lorem ipsum 1c</p>
+                    </div>
+                    <div class="text_box_bottom">
+                        <p>Lorem ipsum 2c</p>
+                    </div>
+                </div>
+                <div class="text_box">
+                    <div class="text_box_top">
+                        <p>Lorem ipsum 1d</p>
+                    </div>
+                    <div class="text_box_bottom">
+                        <p>Lorem ipsum 2d</p>
+                    </div>
+                </div>
+                <div class="text_box">
+                    <div class="text_box_top">
+                        <p>Lorem ipsum 1e</p>
+                    </div>
+                    <div class="text_box_bottom">
+                        <p>Lorem ipsum 2e</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
 		<script>
 			$( function() {
-				$( "#element" ).slidester( {
+				$( ".slider" ).slidester( {
 					prop1: "a custom value"
 				} );
 			} );
