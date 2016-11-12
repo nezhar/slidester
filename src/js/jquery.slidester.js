@@ -6,14 +6,20 @@
 		// Plugin default congifuration
 		var pluginName = "slidester",
 			defaults = {
-				prop1: "value"
+                direction: 1,
+                animation: "fade",
+                loadSpeed: 1000,
+                slideSpeed: 5000,
+                animationSpeed: 1500,
+                pauseOnHover: true
 			};
 
 		// The actual plugin constructor
 		function Plugin (element, options) {
 			this.element = element;
             this.orig_element = $(element).clone();
-            this.slide_count = this.current_slide = $(element).find(".images img").size()-1;
+            this.current_slide = 0;
+            this.slide_count = $(element).find(".images img").size()-1;
 			this.settings = $.extend({}, defaults, options);
 			this._defaults = defaults;
 			this._name = pluginName;
@@ -23,15 +29,18 @@
 		// Avoid Plugin.prototype conflicts
 		$.extend(Plugin.prototype, {
 			init: function() {
-                this.loaded = 0;
 				this.initWrapper();
                 this.hideContent();
-
-                this.slide();
-                setInterval((function() {
-                    this.slide();
-                }).bind(this), 5000);
+                this.load();
 			},
+            startTimer: function() {
+                this.timer = setInterval((function() {
+                    this.slide();
+                }).bind(this), this.settings.slideSpeed);
+            },
+            stopTimer: function() {
+                clearInterval(this.timer);
+            },
 			initWrapper: function() {
                 $(this.element).html($("<div></div>").addClass("slidester").append($(this.orig_element).html()));
 			},
@@ -39,9 +48,19 @@
                 $(this.element).find(".images img").hide();
                 $(this.element).find(".text_boxes .text_box").hide();
             },
-            slide: function(direction) {
-                this.animate(direction);
-                this.setHeight();
+            load: function() {
+                this.fadeIn();
+                this.setHeight(this.settings.loadSpeed);
+                this.startTimer();
+
+                //Add Hover watcher
+                if (this.settings.pauseOnHover) {
+                    this.pauseOnHover();
+                }
+            },
+            slide: function() {
+                this.move();
+                this.setHeight(1000);
             },
             nextSlide: function() {
                 if (this.current_slide < this.slide_count) {
@@ -57,23 +76,51 @@
                     this.current_slide = this.slide_count;
                 }
             },
-            animate: function(direction) {
-                $(this.element).find(".images img").eq(this.current_slide).fadeOut(1600, "linear");
+            move: function() {
+                switch (this.settings.direction) {
+                    case 1:
+                        this.moveSlide = this.nextSlide;
+                        break;
+                    case -1:
+                        this.moveSlide = this.prevSlide;
+                        break;
+                }
 
-        		if (direction < 0) {
-                    this.prevSlide();
-        		}
-        		else {
-                    this.nextSlide();
-        	    }
-
-        	    $(this.element).find(".images img").eq(this.current_slide).fadeIn(1600, "linear");
+                this.animate(this.settings.animation);
             },
-            setHeight: function() {
-
+            animate: function(type) {
+                switch (type) {
+                    case "fade":
+                        this.fade();
+                        break;
+                    default:
+                        this.fade();
+                        break;
+                }
+            },
+            fade: function() {
+                this.fadeOut(this.settings.animationSpeed);
+                this.moveSlide();
+                this.fadeIn(this.settings.animationSpeed);
+            },
+            fadeIn: function(speed) {
+                $(this.element).find(".images img").eq(this.current_slide).fadeIn(speed, "linear");
+            },
+            fadeOut: function(speed) {
+                $(this.element).find(".images img").eq(this.current_slide).fadeOut(speed, "linear");
+            },
+            setHeight: function(speed) {
                 $(this.element).animate({
                     height: $(this.element).find(".images img").eq(this.current_slide).height()
-                }, 1000);
+                }, speed);
+            },
+            pauseOnHover: function() {
+                var self = this;
+                $(this.element).hover(function() {
+            	    self.stopTimer();
+            	},function() {
+            	    self.startTimer();
+            	});
             }
 		});
 

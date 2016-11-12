@@ -11,7 +11,8 @@
 
         <style>
             .slider {
-                width: 500px;
+                width: 600px;
+                margin: 20px auto;
             }
         </style>
 	</head>
@@ -68,7 +69,7 @@
     			</div>
             </div>
         </div>
-        
+
         <div id="element2" class="slider">
             <div class="images">
                 <img src="slides/6.jpg">
@@ -121,11 +122,17 @@
         </div>
 
 		<script>
-			$( function() {
-				$( ".slider" ).slidester( {
-					prop1: "a custom value"
-				} );
-			} );
+			$(function() {
+				$("#element1").slidester({
+					direction: 1,
+                    loadSpeed: 0
+				});
+
+                $("#element2").slidester({
+					direction: 1,
+                    pauseOnHover: false
+				});
+			});
 		</script>
 	</body>
 </html>
