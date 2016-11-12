@@ -11,7 +11,9 @@
                 loadSpeed: 1000,
                 slideSpeed: 5000,
                 animationSpeed: 1500,
-                pauseOnHover: true
+                pauseOnHover: true,
+                controlButtons: true,
+                controlButtonsDisplayClass: "hover",
 			};
 
 		// The actual plugin constructor
@@ -42,7 +44,30 @@
                 clearInterval(this.timer);
             },
 			initWrapper: function() {
-                $(this.element).html($("<div></div>").addClass("slidester").append($(this.orig_element).html()));
+                // Add default wrapper
+                var wrapper = $("<div></div>").addClass("slidester").append(
+                    $(this.orig_element).html()
+                );
+
+                // Add slider control buttons
+                if (this.settings.controlButtons) {
+                    var control = $("<div></div>").addClass("control");
+
+                    control.append(
+                        $("<span></span>").addClass("control-left")
+                    ).append(
+                        $("<span></span>").addClass("control-right")
+                    );
+
+                    if (this.settings.controlButtonsDisplayClass) {
+                        control.addClass(this.settings.controlButtonsDisplayClass);
+                    }
+
+                    wrapper.append(control);
+                }
+
+                // Add wrapper to DOM
+                $(this.element).html(wrapper);
 			},
             hideContent: function() {
                 $(this.element).find(".images img").hide();
@@ -112,6 +137,11 @@
             setHeight: function(speed) {
                 $(this.element).animate({
                     height: $(this.element).find(".images img").eq(this.current_slide).height()
+                }, speed);
+
+                // Set position of control
+                $(this.element).find(".control").animate({
+                    top: $(this.element).find(".images img").eq(this.current_slide).height()/2 - $(this.element).find(".control").height()/2
                 }, speed);
             },
             pauseOnHover: function() {

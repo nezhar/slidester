@@ -1,9 +1,9 @@
-module.exports = function( grunt ) {
+module.exports = function(grunt) {
 
-	grunt.initConfig( {
+	grunt.initConfig({
 
 		// Import package manifest
-		pkg: grunt.file.readJSON( "package.json" ),
+		pkg: grunt.file.readJSON("package.json"),
 
 		// Banner definitions
 		meta: {
@@ -23,14 +23,14 @@ module.exports = function( grunt ) {
 				banner: "<%= meta.banner %>"
 			},
 			js: {
-				src: [ "src/js/jquery.slidester.js" ],
+				src: ["src/js/jquery.slidester.js"],
 				dest: "dist/js/jquery.slidester.js"
 			}
 		},
 
 		// Lint definitions
 		jshint: {
-			files: [ "src/js/jquery.slidester.js", "test/**/*" ],
+			files: ["src/js/jquery.slidester.js", "test/**/*"],
 			options: {
 				jshintrc: ".jshintrc"
 			}
@@ -46,7 +46,7 @@ module.exports = function( grunt ) {
 		// Minify definitions
 		uglify: {
 			dist: {
-				src: [ "dist/js/jquery.slidester.js" ],
+				src: ["dist/js/jquery.slidester.js"],
 				dest: "dist/js/jquery.slidester.min.js"
 			},
 			options: {
@@ -72,27 +72,39 @@ module.exports = function( grunt ) {
             }
         },
 
+        // Copy images
+        copy: {
+            images: {
+                files: [{
+                    expand: true,
+                    cwd: "src/images/",
+                    src: ["**/*.{png,jpg,svg}"],
+                    dest:"dist/images/"
+                }]
+            }
+        },
+
 		// karma test runner
 		karma: {
             //run during development
             dev: {
 				configFile: "karma.conf.js",
 				singleRun: true,
-				browsers: [ "PhantomJS" ]
+				browsers: ["PhantomJS"]
 			},
 
             // run tests through browsers
 			integrate: {
 				configFile: "karma.conf.js",
 				singleRun: true,
-				browsers: [ "PhantomJS", "Firefox", "Chrome" ]
+				browsers: ["PhantomJS", "Firefox", "Chrome"]
 			},
 
 			//continuous integration mode: run tests once in PhantomJS browser.
 			travis: {
 				configFile: "karma.conf.js",
 				singleRun: true,
-				browsers: [ "PhantomJS" ]
+				browsers: ["PhantomJS"]
 			}
 		},
 
@@ -100,24 +112,25 @@ module.exports = function( grunt ) {
 		// Better than calling grunt a million times
 		// (call 'grunt watch')
 		watch: {
-			files: [ "src/**/*", "test/**/*" ],
-			tasks: [ "default" ]
+			files: ["src/**/*", "test/**/*"],
+			tasks: ["default"]
 		}
 
-	} );
+	});
 
-	grunt.loadNpmTasks( "grunt-contrib-concat" );
-	grunt.loadNpmTasks( "grunt-contrib-jshint" );
-	grunt.loadNpmTasks( "grunt-jscs" );
-	grunt.loadNpmTasks( "grunt-contrib-uglify" );
-    grunt.loadNpmTasks( "grunt-contrib-sass" );
-    grunt.loadNpmTasks( "grunt-contrib-cssmin" );
-	grunt.loadNpmTasks( "grunt-contrib-watch" );
-	grunt.loadNpmTasks( "grunt-karma" );
+	grunt.loadNpmTasks("grunt-contrib-concat");
+	grunt.loadNpmTasks("grunt-contrib-jshint");
+	grunt.loadNpmTasks("grunt-jscs");
+	grunt.loadNpmTasks("grunt-contrib-uglify");
+    grunt.loadNpmTasks("grunt-contrib-sass");
+    grunt.loadNpmTasks("grunt-contrib-cssmin");
+    grunt.loadNpmTasks("grunt-contrib-copy");
+	grunt.loadNpmTasks("grunt-contrib-watch");
+	grunt.loadNpmTasks("grunt-karma");
 
-	grunt.registerTask( "travis", [ "jshint", "karma:travis" ] );
-    grunt.registerTask( "integrate", [ "jshint", "karma:integrate" ] );
-	grunt.registerTask( "lint", [ "jshint", "jscs" ] );
-	grunt.registerTask( "build", [ "concat", "uglify", "sass", "cssmin" ] );
-	grunt.registerTask( "default", [ "build", "jshint", "karma:dev" ] );
+	grunt.registerTask("travis", ["jshint", "karma:travis"]);
+    grunt.registerTask("integrate", ["jshint", "karma:integrate"]);
+	grunt.registerTask("lint", ["jshint", "jscs"]);
+	grunt.registerTask("build", ["concat", "uglify", "sass", "cssmin", "copy"]);
+	grunt.registerTask("default", ["build", "jshint", "karma:dev"]);
 };

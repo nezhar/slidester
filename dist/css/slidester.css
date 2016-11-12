@@ -1,11 +1,35 @@
 .slidester {
-  width: 100%; }
-  .slidester .images {
-    position: relative; }
+  width: 100%;
+  position: relative; }
   .slidester .images img {
     width: 100%;
     position: absolute;
     top: 0;
-    left: 0; }
+    left: 0;
+    z-index: 10; }
+  .slidester .control {
+    position: absolute;
+    z-index: 20;
+    width: 100%; }
+    .slidester .control.hover {
+      opacity: 0;
+      visibility: hidden; }
+    .slidester .control .control-left, .slidester .control .control-right {
+      background-image: url("../images/default-left.png");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      width: 75px;
+      height: 75px;
+      display: block;
+      float: left;
+      cursor: pointer; }
+    .slidester .control .control-right {
+      background-image: url("../images/default-right.png");
+      float: right; }
+  .slidester:hover .control.hover {
+    opacity: 1;
+    visibility: visible;
+    transition: visibility 0.3s, opacity 0.5s linear; }
 
 /*# sourceMappingURL=slidester.css.map */
