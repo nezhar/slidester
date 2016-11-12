@@ -22,13 +22,15 @@
                 pauseOnHover: true,
                 controlButtons: true,
                 controlButtonsDisplayClass: "hover",
+                controlRadio: true,
+                controlRadioDisplayClass: "hover",
 			};
 
 		// The actual plugin constructor
 		function Plugin (element, options) {
 			this.element = element;
             this.orig_element = $(element).clone();
-            this.current_slide = 0;
+            this.current_slide = this.next_slide = 0;
             this.slide_count = $(element).find(".images img").size()-1;
 			this.settings = $.extend({}, defaults, options);
 			this._defaults = defaults;
@@ -45,7 +47,7 @@
 			},
             startTimer: function() {
                 this.timer = setInterval((function() {
-                    this.slide();
+                    this.slide(this.settings.direction);
                 }).bind(this), this.settings.slideSpeed);
             },
             stopTimer: function() {
@@ -57,8 +59,14 @@
 
                 // Add slider control buttons
                 if (this.settings.controlButtons) {
-                    wrapper.append(this.createControlWrapper());
-                    this.controlButtonsHandler();
+                    wrapper.append(this.createButtonControlWrapper());
+                    this.controlButtonHandler();
+                }
+
+                // Add slider control radio bullets
+                if (this.settings.controlRadio) {
+                    wrapper.append(this.createRadioControlWrapper());
+                    this.controlRadioHandler();
                 }
 
                 // Add wrapper to DOM
@@ -80,25 +88,25 @@
             },
             nextSlide: function() {
                 if (this.current_slide < this.slide_count) {
-                    this.current_slide++;
+                    this.next_slide = this.current_slide + 1;
                 } else {
-                    this.current_slide = 0;
+                    this.next_slide = 0;
                 }
             },
             prevSlide: function() {
                 if (this.current_slide > 0) {
-                    this.current_slide--;
+                    this.next_slide = this.current_slide - 1;
                 } else {
-                    this.current_slide = this.slide_count;
+                    this.next_slide = this.slide_count;
                 }
             },
-            slide: function() {
-                switch (this.settings.direction) {
+            slide: function(direction) {
+                switch (direction) {
                     case 1:
-                        this.moveSlide = this.nextSlide;
+                        this.nextSlide();
                         break;
                     case -1:
-                        this.moveSlide = this.prevSlide;
+                        this.prevSlide();
                         break;
                 }
 
@@ -118,7 +126,8 @@
             },
             fade: function() {
                 this.fadeOut(this.settings.animationSpeed);
-                this.moveSlide();
+                this.setActiveRadio();
+                this.current_slide = this.next_slide;
                 this.fadeIn(this.settings.animationSpeed);
             },
             fadeIn: function(speed) {
@@ -129,16 +138,24 @@
             },
             setHeight: function(speed) {
                 var slideHeight = $(this.element).find(".images img").eq(this.current_slide).height(),
-                    controlHeight = $(this.element).find(".control").height();
+                    controlButton = $(this.element).find(".control-buttons"),
+                    controlButtonHeight = controlButton.height(),
+                    controlRadio = $(this.element).find(".control-radio"),
+                    controlRadioHeight = controlRadio.height();
 
                 // Set slide height
                 $(this.element).animate({
                     height: slideHeight
                 }, speed);
 
-                // Set position of control based on slide height
-                $(this.element).find(".control").animate({
-                    top: slideHeight/2 - controlHeight/2
+                // Set position of control buttons based on slide height
+                controlButton.animate({
+                    top: slideHeight/2 - controlButtonHeight/2
+                }, speed);
+
+                // Set position of control radio based on slide height
+                controlRadio.animate({
+                    top: slideHeight - controlRadioHeight
                 }, speed);
             },
             createWrapper: function() {
@@ -146,18 +163,35 @@
                     $(this.orig_element).html()
                 );
             },
-            createControlWrapper: function() {
-                var controlWrapper = $("<div></div>").addClass("control").append(
+            createButtonControlWrapper: function() {
+                var buttonControlWrapper = $("<div></div>").addClass("control-buttons").append(
                     $("<span></span>").addClass("control-left")
                 ).append(
                     $("<span></span>").addClass("control-right")
                 );
 
                 if (this.settings.controlButtonsDisplayClass) {
-                    controlWrapper.addClass(this.settings.controlButtonsDisplayClass);
+                    buttonControlWrapper.addClass(this.settings.controlButtonsDisplayClass);
                 }
 
-                return controlWrapper;
+                return buttonControlWrapper;
+            },
+            createRadioControlWrapper: function() {
+                var radioControlWrapper = $("<div></div>").addClass("control-radio");
+
+                for (var i=0; i<=this.slide_count; i++) {
+                    var radioButton = $("<span></span>").addClass("radio");
+                    if (i === this.current_slide) {
+                        radioButton.addClass("active");
+                    }
+                    radioControlWrapper.append(radioButton);
+                }
+
+                if (this.settings.controlRadioDisplayClass) {
+                    radioControlWrapper.addClass(this.settings.controlRadioDisplayClass);
+                }
+
+                return radioControlWrapper;
             },
             pauseOnHoverHandler: function() {
                 var self = this;
@@ -168,20 +202,31 @@
             	    self.startTimer();
             	});
             },
-            controlButtonsHandler: function() {
+            controlButtonHandler: function() {
                 var self = this;
 
                 // Move backwards
-                $(this.element).delegate(".control .control-left", "click", function() {
-                    self.moveSlide = self.nextSlide;
-                    self.animate();
+                $(this.element).delegate(".control-buttons .control-left", "click", function() {
+                    self.slide(-1);
                 });
 
                 // Move forward
-                $(this.element).delegate(".control .control-right", "click", function() {
-                    self.moveSlide = self.prevSlide;
+                $(this.element).delegate(".control-buttons .control-right", "click", function() {
+                    self.slide(1);
+                });
+            },
+            controlRadioHandler: function() {
+                var self = this;
+
+                // Move to slide
+                $(this.element).delegate(".control-radio .radio", "click", function() {
+                    self.next_slide = $(this).index();
                     self.animate();
                 });
+            },
+            setActiveRadio: function() {
+                $(this.element).find(".control-radio .radio:eq("+this.current_slide+")").removeClass("active");
+                $(this.element).find(".control-radio .radio:eq("+this.next_slide+")").addClass("active");
             }
 		});
 
