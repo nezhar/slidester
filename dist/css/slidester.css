@@ -13,7 +13,8 @@
     width: 100%; }
     .slidester .control.hover {
       opacity: 0;
-      visibility: hidden; }
+      visibility: hidden;
+      transition: visibility 0s, opacity 0.5s linear; }
     .slidester .control .control-left, .slidester .control .control-right {
       background-image: url("../images/default-left.png");
       background-position: center;
@@ -29,7 +30,6 @@
       float: right; }
   .slidester:hover .control.hover {
     opacity: 1;
-    visibility: visible;
-    transition: visibility 0.3s, opacity 0.5s linear; }
+    visibility: visible; }
 
 /*# sourceMappingURL=slidester.css.map */

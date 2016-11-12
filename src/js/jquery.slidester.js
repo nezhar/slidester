@@ -45,25 +45,12 @@
             },
 			initWrapper: function() {
                 // Add default wrapper
-                var wrapper = $("<div></div>").addClass("slidester").append(
-                    $(this.orig_element).html()
-                );
+                var wrapper = this.createWrapper();
 
                 // Add slider control buttons
                 if (this.settings.controlButtons) {
-                    var control = $("<div></div>").addClass("control");
-
-                    control.append(
-                        $("<span></span>").addClass("control-left")
-                    ).append(
-                        $("<span></span>").addClass("control-right")
-                    );
-
-                    if (this.settings.controlButtonsDisplayClass) {
-                        control.addClass(this.settings.controlButtonsDisplayClass);
-                    }
-
-                    wrapper.append(control);
+                    wrapper.append(this.createControlWrapper());
+                    this.controlButtonsHandler();
                 }
 
                 // Add wrapper to DOM
@@ -78,14 +65,10 @@
                 this.setHeight(this.settings.loadSpeed);
                 this.startTimer();
 
-                //Add Hover watcher
+                //Add Hover Handler
                 if (this.settings.pauseOnHover) {
-                    this.pauseOnHover();
+                    this.pauseOnHoverHandler();
                 }
-            },
-            slide: function() {
-                this.move();
-                this.setHeight(1000);
             },
             nextSlide: function() {
                 if (this.current_slide < this.slide_count) {
@@ -101,7 +84,7 @@
                     this.current_slide = this.slide_count;
                 }
             },
-            move: function() {
+            slide: function() {
                 switch (this.settings.direction) {
                     case 1:
                         this.moveSlide = this.nextSlide;
@@ -111,10 +94,10 @@
                         break;
                 }
 
-                this.animate(this.settings.animation);
+                this.animate();
             },
-            animate: function(type) {
-                switch (type) {
+            animate: function() {
+                switch (this.settings.animation) {
                     case "fade":
                         this.fade();
                         break;
@@ -122,6 +105,8 @@
                         this.fade();
                         break;
                 }
+
+                this.setHeight(1000);
             },
             fade: function() {
                 this.fadeOut(this.settings.animationSpeed);
@@ -135,22 +120,60 @@
                 $(this.element).find(".images img").eq(this.current_slide).fadeOut(speed, "linear");
             },
             setHeight: function(speed) {
+                var slideHeight = $(this.element).find(".images img").eq(this.current_slide).height(),
+                    controlHeight = $(this.element).find(".control").height();
+
+                // Set slide height
                 $(this.element).animate({
-                    height: $(this.element).find(".images img").eq(this.current_slide).height()
+                    height: slideHeight
                 }, speed);
 
-                // Set position of control
+                // Set position of control based on slide height
                 $(this.element).find(".control").animate({
-                    top: $(this.element).find(".images img").eq(this.current_slide).height()/2 - $(this.element).find(".control").height()/2
+                    top: slideHeight/2 - controlHeight/2
                 }, speed);
             },
-            pauseOnHover: function() {
+            createWrapper: function() {
+                return $("<div></div>").addClass("slidester").append(
+                    $(this.orig_element).html()
+                );
+            },
+            createControlWrapper: function() {
+                var controlWrapper = $("<div></div>").addClass("control").append(
+                    $("<span></span>").addClass("control-left")
+                ).append(
+                    $("<span></span>").addClass("control-right")
+                );
+
+                if (this.settings.controlButtonsDisplayClass) {
+                    controlWrapper.addClass(this.settings.controlButtonsDisplayClass);
+                }
+
+                return controlWrapper;
+            },
+            pauseOnHoverHandler: function() {
                 var self = this;
+
                 $(this.element).hover(function() {
             	    self.stopTimer();
             	},function() {
             	    self.startTimer();
             	});
+            },
+            controlButtonsHandler: function() {
+                var self = this;
+
+                // Move backwards
+                $(this.element).delegate(".control .control-left", "click", function() {
+                    self.moveSlide = self.nextSlide;
+                    self.animate();
+                });
+
+                // Move forward
+                $(this.element).delegate(".control .control-right", "click", function() {
+                    self.moveSlide = self.prevSlide;
+                    self.animate();
+                });
             }
 		});
 
