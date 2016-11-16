@@ -121,6 +121,14 @@
             </div>
         </div>
 
+        <div id="element3" class="slider">
+            <div class="images">
+                <img src="slides/4.jpg">
+                <img src="slides/5.jpg">
+                <img src="slides/6.jpg">
+            </div>
+        </div>
+
 		<script>
 			$(function() {
 				$("#element1").slidester({
@@ -132,6 +140,13 @@
 					direction: 1,
                     pauseOnHover: false,
                     controlButtons: false,
+                    controlRadioDisplayClass: null,
+				});
+
+                $("#element3").slidester({
+					direction: -1,
+                    pauseOnHover: true,
+                    controlButtons: true,
                     controlRadioDisplayClass: null,
 				});
 			});

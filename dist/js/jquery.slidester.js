@@ -28,13 +28,15 @@
 
 		// The actual plugin constructor
 		function Plugin (element, options) {
+			this._name = pluginName;
+            this._defaults = defaults;
+            this._element = $(element).clone();
+
 			this.element = element;
-            this.orig_element = $(element).clone();
             this.current_slide = this.next_slide = 0;
             this.slide_count = $(element).find(".images img").size()-1;
 			this.settings = $.extend({}, defaults, options);
-			this._defaults = defaults;
-			this._name = pluginName;
+
 			this.init();
 		}
 
@@ -160,7 +162,7 @@
             },
             createWrapper: function() {
                 return $("<div></div>").addClass("slidester").append(
-                    $(this.orig_element).html()
+                    $(this._element).html()
                 );
             },
             createButtonControlWrapper: function() {
