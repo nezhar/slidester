@@ -133,7 +133,10 @@
 			$(function() {
 				$("#element1").slidester({
 					direction: 1,
-                    loadSpeed: 0
+                    startSlide: 1,
+                    initHeightSpeed: 0,
+                    initSlideSpeed: 0,
+                    slideSpeed: 2500,
 				});
 
                 $("#element2").slidester({
@@ -149,6 +152,14 @@
                     controlButtons: true,
                     controlRadioDisplayClass: null,
 				});
+
+                setTimeout(function() {
+                    $("#element1").slidester("reload");
+                }, 7000);
+
+                setTimeout(function() {
+                    $("#element1").slidester("remove");
+                }, 12000);
 			});
 		</script>
 	</body>

@@ -15,8 +15,11 @@
 		var pluginName = "slidester",
 			defaults = {
                 direction: 1,
+                startSlide: 0,
                 animation: "fade",
-                loadSpeed: 1000,
+                initHeightSpeed: 500,
+                initSlideSpeed: 500,
+                heightSpeed: 1000,
                 slideSpeed: 5000,
                 animationSpeed: 1500,
                 pauseOnHover: true,
@@ -33,8 +36,6 @@
             this._element = $(element).clone();
 
 			this.element = element;
-            this.current_slide = this.next_slide = 0;
-            this.slide_count = $(element).find(".images img").size()-1;
 			this.settings = $.extend({}, defaults, options);
 
 			this.init();
@@ -43,10 +44,20 @@
 		// Avoid Plugin.prototype conflicts
 		$.extend(Plugin.prototype, {
 			init: function() {
+                this.initSlides();
 				this.initWrapper();
                 this.hideContent();
                 this.load();
 			},
+            initSlides: function() {
+                this.slideCount = $(this.element).find(".images img").size()-1;
+
+                if (this.settings.startSlide <= this.slideCount) {
+                    this.currentSlide = this.nextSlide = this.settings.startSlide;
+                } else {
+                    this.currentSlide = this.nextSlide = 0;
+                }
+            },
             startTimer: function() {
                 this.timer = setInterval((function() {
                     this.slide(this.settings.direction);
@@ -79,8 +90,8 @@
                 $(this.element).find(".text_boxes .text_box").hide();
             },
             load: function() {
-                this.fadeIn();
-                this.setHeight(this.settings.loadSpeed);
+                this.fadeIn(this.settings.initSlideSpeed);
+                this.setHeight(this.settings.initHeightSpeed);
                 this.startTimer();
 
                 //Add Hover Handler
@@ -88,31 +99,31 @@
                     this.pauseOnHoverHandler();
                 }
             },
-            nextSlide: function() {
-                if (this.current_slide < this.slide_count) {
-                    this.next_slide = this.current_slide + 1;
-                } else {
-                    this.next_slide = 0;
-                }
-            },
-            prevSlide: function() {
-                if (this.current_slide > 0) {
-                    this.next_slide = this.current_slide - 1;
-                } else {
-                    this.next_slide = this.slide_count;
-                }
-            },
             slide: function(direction) {
                 switch (direction) {
                     case 1:
-                        this.nextSlide();
+                        this.slideNext();
                         break;
                     case -1:
-                        this.prevSlide();
+                        this.slidePrev();
                         break;
                 }
 
                 this.animate();
+            },
+            slideNext: function() {
+                if (this.currentSlide < this.slideCount) {
+                    this.nextSlide = this.currentSlide + 1;
+                } else {
+                    this.nextSlide = 0;
+                }
+            },
+            slidePrev: function() {
+                if (this.currentSlide > 0) {
+                    this.nextSlide = this.currentSlide - 1;
+                } else {
+                    this.nextSlide = this.slideCount;
+                }
             },
             animate: function() {
                 switch (this.settings.animation) {
@@ -124,22 +135,22 @@
                         break;
                 }
 
-                this.setHeight(1000);
+                this.setHeight(this.settings.heightSpeed);
             },
             fade: function() {
                 this.fadeOut(this.settings.animationSpeed);
                 this.setActiveRadio();
-                this.current_slide = this.next_slide;
+                this.currentSlide = this.nextSlide;
                 this.fadeIn(this.settings.animationSpeed);
             },
             fadeIn: function(speed) {
-                $(this.element).find(".images img").eq(this.current_slide).fadeIn(speed, "linear");
+                $(this.element).find(".images img").eq(this.currentSlide).fadeIn(speed, "linear");
             },
             fadeOut: function(speed) {
-                $(this.element).find(".images img").eq(this.current_slide).fadeOut(speed, "linear");
+                $(this.element).find(".images img").eq(this.currentSlide).fadeOut(speed, "linear");
             },
             setHeight: function(speed) {
-                var slideHeight = $(this.element).find(".images img").eq(this.current_slide).height(),
+                var slideHeight = $(this.element).find(".images img").eq(this.currentSlide).height(),
                     controlButton = $(this.element).find(".control-buttons"),
                     controlButtonHeight = controlButton.height(),
                     controlRadio = $(this.element).find(".control-radio"),
@@ -181,9 +192,9 @@
             createRadioControlWrapper: function() {
                 var radioControlWrapper = $("<div></div>").addClass("control-radio");
 
-                for (var i=0; i<=this.slide_count; i++) {
+                for (var i=0; i<=this.slideCount; i++) {
                     var radioButton = $("<span></span>").addClass("radio");
-                    if (i === this.current_slide) {
+                    if (i === this.currentSlide) {
                         radioButton.addClass("active");
                     }
                     radioControlWrapper.append(radioButton);
@@ -198,9 +209,9 @@
             pauseOnHoverHandler: function() {
                 var self = this;
 
-                $(this.element).hover(function() {
+                $(this.element).on("mouseenter." + pluginName, function() {
             	    self.stopTimer();
-            	},function() {
+            	}).on("mouseleave." + pluginName,function() {
             	    self.startTimer();
             	});
             },
@@ -208,12 +219,12 @@
                 var self = this;
 
                 // Move backwards
-                $(this.element).delegate(".control-buttons .control-left", "click", function() {
+                $(this.element).delegate(".control-buttons .control-left", "click." + pluginName, function() {
                     self.slide(-1);
                 });
 
                 // Move forward
-                $(this.element).delegate(".control-buttons .control-right", "click", function() {
+                $(this.element).delegate(".control-buttons .control-right", "click." + pluginName, function() {
                     self.slide(1);
                 });
             },
@@ -221,14 +232,30 @@
                 var self = this;
 
                 // Move to slide
-                $(this.element).delegate(".control-radio .radio", "click", function() {
-                    self.next_slide = $(this).index();
+                $(this.element).delegate(".control-radio .radio", "click." + pluginName, function() {
+                    self.nextSlide = $(this).index();
                     self.animate();
                 });
             },
             setActiveRadio: function() {
-                $(this.element).find(".control-radio .radio:eq("+this.current_slide+")").removeClass("active");
-                $(this.element).find(".control-radio .radio:eq("+this.next_slide+")").addClass("active");
+                $(this.element).find(".control-radio .radio:eq("+this.currentSlide+")").removeClass("active");
+                $(this.element).find(".control-radio .radio:eq("+this.nextSlide+")").addClass("active");
+            },
+            _unbind: function() {
+                this.stopTimer();
+                $(this.element).unbind("." + pluginName);
+            },
+            _original: function() {
+                this._unbind();
+                $(this.element).replaceWith($(this._element));
+            },
+            _remove: function() {
+                this._unbind();
+                $(this.element).remove();
+            },
+            _reload: function() {
+                this._unbind();
+                this.init();
             }
 		});
 
@@ -236,9 +263,32 @@
 		// preventing against multiple instantiations
 		$.fn[pluginName] = function(options) {
 			return this.each(function() {
-				if (!$.data(this, "plugin_" + pluginName)) {
+                var instance = $.data(this, "plugin_" + pluginName);
+
+				if (!instance) {
 					$.data(this, "plugin_" + pluginName, new Plugin(this, options));
-				}
+				} else {
+                    switch (options) {
+                        case "unbind":
+                            instance._unbind();
+                            $.data(this, "plugin_" + pluginName, null);
+                            break;
+                        case "remove":
+                            instance._remove();
+                            $.data(this, "plugin_" + pluginName, null);
+                            break;
+                        case "original":
+                            instance._original();
+                            $.data(this, "plugin_" + pluginName, null);
+                            break;
+                        case "reload":
+                            instance._reload();
+                            break;
+                        default:
+                            console.log("Invalid option: '" + options + "'");
+                    }
+                }
+
 			});
 		};
 
