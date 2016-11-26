@@ -1,0 +1,15 @@
+footer {
+    padding: 30px 0;
+}
+
+.row {
+    padding-bottom: 10px;
+}
+
+.navbar {
+    border-radius: 0;
+}
+
+ul.nav li.dropdown:hover > ul.dropdown-menu {
+    display: block;
+}

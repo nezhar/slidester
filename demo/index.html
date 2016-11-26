@@ -1,166 +1,107 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>jQuery Slidester</title>
-        <!-- jQuery -->
-        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
-        <!-- slidester CSS and JS -->
-        <link rel="stylesheet" type="text/css" href="../dist/css/slidester.css" media="screen">
-		<script src="../dist/js/jquery.slidester.js"></script>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <style>
-            .slider {
-                width: 600px;
-                margin: 20px auto;
-            }
-        </style>
-	</head>
-	<body>
-		<div id="element1" class="slider">
-            <div class="images">
-                <img src="slides/1.jpg">
-                <img src="slides/2.jpg">
-                <img src="slides/3.jpg">
-                <img src="slides/4.jpg">
-                <img src="slides/5.jpg">
-                <img src="slides/6.jpg">
-            </div>
-            <div class="text_boxes">
-                <div class="text_box">
-    				<div class="text_box_top">
-    					<p>Lorem ipsum 1a</p>
-    				</div>
-                    <div class="text_box_bottom">
-    					<p>Lorem ipsum 2a</p>
-    				</div>
-    			</div>
-                <div class="text_box">
-    				<div class="text_box_top">
-    					<p>Lorem ipsum 1b</p>
-    				</div>
-                    <div class="text_box_bottom">
-    					<p>Lorem ipsum 2b</p>
-    				</div>
-    			</div>
-                <div class="text_box">
-    				<div class="text_box_top">
-    					<p>Lorem ipsum 1c</p>
-    				</div>
-                    <div class="text_box_bottom">
-    					<p>Lorem ipsum 2c</p>
-    				</div>
-    			</div>
-                <div class="text_box">
-    				<div class="text_box_top">
-    					<p>Lorem ipsum 1d</p>
-    				</div>
-                    <div class="text_box_bottom">
-    					<p>Lorem ipsum 2d</p>
-    				</div>
-    			</div>
-                <div class="text_box">
-    				<div class="text_box_top">
-    					<p>Lorem ipsum 1e</p>
-    				</div>
-                    <div class="text_box_bottom">
-    					<p>Lorem ipsum 2e</p>
-    				</div>
-    			</div>
-            </div>
-        </div>
+	<title>jQuery Slidester - Home</title>
 
-        <div id="element2" class="slider">
-            <div class="images">
-                <img src="slides/6.jpg">
-                <img src="slides/3.jpg">
-                <img src="slides/4.jpg">
-                <img src="slides/5.jpg">
-            </div>
-            <div class="text_boxes">
-                <div class="text_box">
-                    <div class="text_box_top">
-                        <p>Lorem ipsum 1a</p>
-                    </div>
-                    <div class="text_box_bottom">
-                        <p>Lorem ipsum 2a</p>
-                    </div>
-                </div>
-                <div class="text_box">
-                    <div class="text_box_top">
-                        <p>Lorem ipsum 1b</p>
-                    </div>
-                    <div class="text_box_bottom">
-                        <p>Lorem ipsum 2b</p>
-                    </div>
-                </div>
-                <div class="text_box">
-                    <div class="text_box_top">
-                        <p>Lorem ipsum 1c</p>
-                    </div>
-                    <div class="text_box_bottom">
-                        <p>Lorem ipsum 2c</p>
-                    </div>
-                </div>
-                <div class="text_box">
-                    <div class="text_box_top">
-                        <p>Lorem ipsum 1d</p>
-                    </div>
-                    <div class="text_box_bottom">
-                        <p>Lorem ipsum 2d</p>
-                    </div>
-                </div>
-                <div class="text_box">
-                    <div class="text_box_top">
-                        <p>Lorem ipsum 1e</p>
-                    </div>
-                    <div class="text_box_bottom">
-                        <p>Lorem ipsum 2e</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<!-- Slidester -->
+	<link rel="stylesheet" type="text/css" href="../dist/css/slidester.css" media="screen">
 
-        <div id="element3" class="slider">
-            <div class="images">
-                <img src="slides/4.jpg">
-                <img src="slides/5.jpg">
-                <img src="slides/6.jpg">
-            </div>
-        </div>
+    <!-- Demo CSS -->
+	<link rel="stylesheet" type="text/css" href="demo.css">
+</head>
 
-		<script>
-			$(function() {
-				$("#element1").slidester({
-					direction: 1,
-                    startSlide: 1,
-                    initHeightSpeed: 0,
-                    initSlideSpeed: 0,
-                    slideSpeed: 2500,
-				});
+<body>
+	<nav class="navbar navbar-inverse">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">jQuery Slidester</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="index.html">Home</a></li>
+				<li class="dropdown">
+					<a href="examples.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Examples <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="#">Simple</a></li>
+						<li><a href="#">Fullscreen</a></li>
+						<li><a href="#">Effects</a></li>
+					</ul>
+				</li>
+                <li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Documentation <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="#">Slides</a></li>
+						<li><a href="#">Speeds</a></li>
+						<li><a href="#">Navigation</a></li>
+                        <li><a href="#">...</a></li>
+						<li role="separator" class="divider"></li>
+						<li class="dropdown-header">Options</li>
+						<li><a href="#">Callbacks</a></li>
+						<li><a href="#">Destroyers</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</nav>
 
-                $("#element2").slidester({
-					direction: 1,
-                    pauseOnHover: false,
-                    controlButtons: false,
-                    controlRadioDisplayClass: null,
-				});
+	<div class="container">
+		<div class="row row-offcanvas row-offcanvas-right">
+			<div class="row">
+				<div class="col-lg-12">
+					<div id="element1" class="slider">
+						<div class="images">
+							<img src="slides/1.jpg">
+							<img src="slides/2.jpg">
+							<img src="slides/3.jpg">
+							<img src="slides/4.jpg">
+							<img src="slides/5.jpg">
+							<img src="slides/6.jpg">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6 col-lg-4">
+					<h2>Easy to use</h2>
+					<p>The usage is typcal to any jQuery plugin. Check the examples to see how the slider may cover the needs in your project.</p>
+					<p><a class="btn btn-primary" href="#" role="button">Examples &raquo;</a></p>
+				</div>
+				<div class="col-xs-6 col-lg-4">
+					<h2>Customizable</h2>
+					<p>The plugin allows for variouse custom configurations on each slider. The documnetation is describing all the available functionality.</p>
+					<p><a class="btn btn-primary" href="#" role="button">Documentation &raquo;</a></p>
+				</div>
+				<div class="col-xs-6 col-lg-4">
+					<h2>Open source</h2>
+					<p>The Slider is released under the MIT License, so fell free to fork it or use it however you need it. A coffee is always apreaciated :)</p>
+					<p><a class="btn btn-primary" href="#" role="button">Github &raquo;</a></p>
+				</div>
+			</div>
+		</div>
 
-                $("#element3").slidester({
-					direction: -1,
-                    pauseOnHover: true,
-                    controlButtons: true,
-                    controlRadioDisplayClass: null,
-				});
+		<hr>
 
-                setTimeout(function() {
-                    $("#element1").slidester("reload");
-                }, 7000);
+		<footer>
+			<p>&copy; nezhar.com</p>
+		</footer>
 
-                setTimeout(function() {
-                    $("#element1").slidester("remove");
-                }, 12000);
-			});
-		</script>
-	</body>
+	</div>
+
+	<!-- jQuery -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<!-- Slidester  -->
+	<script src="../dist/js/jquery.slidester.js"></script>
+	<script>
+		$(function() {
+			$("#element1").slidester();
+		});
+	</script>
+</body>
+
 </html>

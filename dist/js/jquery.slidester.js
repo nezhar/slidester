@@ -188,7 +188,25 @@
                 return buttonControlWrapper;
             },
             createThumbnailControlWrapper: function() {
+                var thumbnailControlWrapper = $("<div></div>").addClass("control-radio");
 
+                for (var i=0; i<=this.slideCount; i++) {
+                    var thumbnail = $("<span></span>").addClass("thumbnail"),
+                        thumbnailImg = $("<img/>").attr("src", "1")
+                        // To DO: Get imge list
+                        // Display thum
+
+                    if (i === this.currentSlide) {
+                        thumbnail.addClass("active");
+                    }
+                    thumbnailControlWrapper.append(thumbnail);
+                }
+
+                if (this.settings.controlRadioDisplayClass) {
+                    thumbnailControlWrapper.addClass(this.settings.controlRadioDisplayClass);
+                }
+
+                return thumbnailControlWrapper;
             },
             createRadioControlWrapper: function() {
                 var radioControlWrapper = $("<div></div>").addClass("control-radio");
