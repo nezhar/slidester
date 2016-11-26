@@ -75,12 +75,41 @@
         }
     }
 
-    &:hover {
-        .control-buttons.hover {
-            opacity: 1;
-            visibility: visible;
+    .control-thumbnails {
+        width: 100%;
+        position: absolute;
+        z-index: 20;
+        text-align: center;
+
+        &.hover {
+            @extend %hover;
         }
 
+        span {
+            width: 100px;
+            height: 60px;
+            padding: 2px;
+            border-radius: 0;
+            margin: 0;
+            border: 0;
+            background-size: cover;
+            display: inline-block;
+            opacity: 0.6;
+
+            &:hover {
+                cursor: pointer;
+                opacity: 1;
+            }
+
+            &.active {
+                opacity: 1;
+            }
+        }
+    }
+
+    &:hover {
+        .control-buttons.hover,
+        .control-thumbnails.hover,
         .control-radio.hover {
             opacity: 1;
             visibility: visible;

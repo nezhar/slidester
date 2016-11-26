@@ -19,6 +19,8 @@
                 controlButtonsDisplayClass: "hover",
                 controlRadio: true,
                 controlRadioDisplayClass: "hover",
+                controlThumbnails: true,
+                controlThumbnailsDisplayClass: "hover"
 			};
 
 		// The actual plugin constructor
@@ -67,6 +69,12 @@
                 if (this.settings.controlRadio) {
                     wrapper.append(this.createRadioControlWrapper());
                     this.controlRadioHandler();
+                }
+
+                // Add slider control thumnails
+                if (this.settings.controlThumbnails) {
+                    wrapper.append(this.createThumbnailControlWrapper());
+                    this.controlThumbnailsHandler();
                 }
 
                 // Add wrapper to DOM
@@ -147,6 +155,7 @@
             fade: function() {
                 this.fadeOut(this.settings.animationSpeed);
                 this.setActiveRadio();
+                this.setActiveThumbnail();
                 this.currentSlide = this.nextSlide;
                 this.fadeIn(this.settings.animationSpeed);
             },
@@ -180,13 +189,10 @@
                 return buttonControlWrapper;
             },
             createThumbnailControlWrapper: function() {
-                var thumbnailControlWrapper = $("<div></div>").addClass("control-radio");
+                var thumbnailControlWrapper = $("<div></div>").addClass("control-thumbnails");
 
                 for (var i=0; i<=this.slideCount; i++) {
-                    var thumbnail = $("<span></span>").addClass("thumbnail"),
-                        thumbnailImg = $("<img/>").attr("src", "1")
-                        // To DO: Get imge list
-                        // Display thum
+                    var thumbnail = $("<span></span>").addClass("thumbnail").css("background-image", "url(" + $(this.element).find(".images img").eq(i).attr("src") + ")");
 
                     if (i === this.currentSlide) {
                         thumbnail.addClass("active");
@@ -194,8 +200,8 @@
                     thumbnailControlWrapper.append(thumbnail);
                 }
 
-                if (this.settings.controlRadioDisplayClass) {
-                    thumbnailControlWrapper.addClass(this.settings.controlRadioDisplayClass);
+                if (this.settings.controlThumbnailsDisplayClass) {
+                    thumbnailControlWrapper.addClass(this.settings.controlThumbnailsDisplayClass);
                 }
 
                 return thumbnailControlWrapper;
@@ -243,6 +249,15 @@
                     self.slide(1);
                 });
             },
+            controlThumbnailsHandler: function() {
+                var self = this;
+
+                // Move to slide
+                $(this.element).delegate(".control-thumbnails .thumbnail", "click." + pluginName, function() {
+                    self.nextSlide = $(this).index();
+                    self.animate();
+                });
+            },
             controlRadioHandler: function() {
                 var self = this;
 
@@ -253,19 +268,26 @@
                 });
             },
 
+
             /**
              * Slider setters
              */
             setActiveRadio: function() {
-                $(this.element).find(".control-radio .radio:eq("+this.currentSlide+")").removeClass("active");
-                $(this.element).find(".control-radio .radio:eq("+this.nextSlide+")").addClass("active");
+                $(this.element).find(".control-radio .radio").eq(this.currentSlide).removeClass("active");
+                $(this.element).find(".control-radio .radio").eq(this.nextSlide).addClass("active");
+            },
+            setActiveThumbnail: function() {
+                $(this.element).find(".control-thumbnails .thumbnail").eq(this.currentSlide).removeClass("active");
+                $(this.element).find(".control-thumbnails .thumbnail").eq(this.nextSlide).addClass("active");
             },
             setHeight: function(speed) {
                 var slideHeight = $(this.element).find(".images img").eq(this.currentSlide).height(),
                     controlButton = $(this.element).find(".control-buttons"),
                     controlButtonHeight = controlButton.height(),
                     controlRadio = $(this.element).find(".control-radio"),
-                    controlRadioHeight = controlRadio.height();
+                    controlRadioHeight = controlRadio.height(),
+                    controlThumbnail = $(this.element).find(".control-thumbnails"),
+                    controlThumbnailHeight = controlThumbnail.height();
 
                 // Set slide height
                 $(this.element).animate({
@@ -280,6 +302,11 @@
                 // Set position of control radio based on slide height
                 controlRadio.animate({
                     top: slideHeight - controlRadioHeight
+                }, speed);
+
+                // Set position of control thumbnails based on slide height and control radio height
+                controlThumbnail.animate({
+                    top: slideHeight - (controlRadioHeight + controlThumbnailHeight)
                 }, speed);
             },
 
