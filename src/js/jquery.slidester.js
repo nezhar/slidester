@@ -20,7 +20,9 @@
                 controlRadio: true,
                 controlRadioDisplayClass: "hover",
                 controlThumbnails: true,
-                controlThumbnailsDisplayClass: "hover"
+                controlThumbnailsDisplayClass: "hover",
+                captions: true,
+                captionsDisplayClass: null
 			};
 
 		// The actual plugin constructor
@@ -75,6 +77,11 @@
                 if (this.settings.controlThumbnails) {
                     wrapper.append(this.createThumbnailControlWrapper());
                     this.controlThumbnailsHandler();
+                }
+
+                // Add captions
+                if (this.settings.captions) {
+                    wrapper.append(this.createCaptionWrapper());
                 }
 
                 // Add wrapper to DOM
@@ -156,6 +163,7 @@
                 this.fadeOut(this.settings.animationSpeed);
                 this.setActiveRadio();
                 this.setActiveThumbnail();
+                this.setActiveCaption();
                 this.currentSlide = this.nextSlide;
                 this.fadeIn(this.settings.animationSpeed);
             },
@@ -166,13 +174,14 @@
                 $(this.element).find(".images img").eq(this.currentSlide).fadeOut(speed, "linear");
             },
 
-
             /**
-             * Content wrappers
+             * Content wrappers, load images
              */
             createWrapper: function() {
                 return $("<div></div>").addClass("slidester").append(
-                    $(this._element).html()
+                    $("<div></div>").addClass("images").html(
+                        $(this._element).find(".images").html()
+                    )
                 );
             },
             createButtonControlWrapper: function() {
@@ -222,6 +231,26 @@
                 }
 
                 return radioControlWrapper;
+            },
+            createCaptionWrapper: function() {
+                var captionWrapper = $("<div></div>").addClass("captions");
+
+                for (var i=0; i<=this.slideCount; i++) {
+                    var caption = $("<div></div>").addClass("caption").html($(this.element).find(".captions .caption").eq(i).html());
+
+                    console.log($(this.element).find(".images img").eq(i).next("div.cation").html());
+
+                    if (i === this.currentSlide) {
+                        caption.addClass("active");
+                    }
+                    captionWrapper.append(caption);
+                }
+
+                if (this.settings.captionsDisplayClass) {
+                    captionWrapper.addClass(this.settings.captionsDisplayClass);
+                }
+
+                return captionWrapper;
             },
 
             /**
@@ -279,6 +308,10 @@
             setActiveThumbnail: function() {
                 $(this.element).find(".control-thumbnails .thumbnail").eq(this.currentSlide).removeClass("active");
                 $(this.element).find(".control-thumbnails .thumbnail").eq(this.nextSlide).addClass("active");
+            },
+            setActiveCaption: function() {
+                $(this.element).find(".captions .caption").eq(this.currentSlide).removeClass("active");
+                $(this.element).find(".captions .caption").eq(this.nextSlide).addClass("active");
             },
             setHeight: function(speed) {
                 var slideHeight = $(this.element).find(".images img").eq(this.currentSlide).height(),

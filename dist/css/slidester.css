@@ -1,4 +1,4 @@
-.slidester .control-buttons.hover, .slidester .control-radio.hover, .slidester .control-thumbnails.hover {
+.slidester .captions.hover, .slidester .control-buttons.hover, .slidester .control-radio.hover, .slidester .control-thumbnails.hover {
   opacity: 0;
   visibility: hidden;
   transition: visibility 0s, opacity 0.5s linear; }
@@ -12,6 +12,32 @@
     top: 0;
     left: 0;
     z-index: 10; }
+  .slidester .captions {
+    position: absolute;
+    z-index: 20;
+    text-align: center;
+    width: 100%; }
+    .slidester .captions .caption {
+      display: none;
+      width: 30%;
+      margin: 1% auto 0 1%; }
+      .slidester .captions .caption.active {
+        display: block; }
+      .slidester .captions .caption .caption-top {
+        background-color: rgba(0, 0, 0, 0.6);
+        width: 100%;
+        color: white;
+        height: 100px;
+        overflow: hidden;
+        display: block;
+        text-align: left;
+        padding: 10px; }
+      .slidester .captions .caption .caption-bottom {
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.8);
+        display: block;
+        text-align: right;
+        padding-right: 10px; }
   .slidester .control-buttons {
     position: absolute;
     z-index: 20;
@@ -66,6 +92,7 @@
         opacity: 1; }
       .slidester .control-thumbnails span.active {
         opacity: 1; }
+  .slidester:hover .captions.hover,
   .slidester:hover .control-buttons.hover,
   .slidester:hover .control-thumbnails.hover,
   .slidester:hover .control-radio.hover {
