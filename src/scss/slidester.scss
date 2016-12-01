@@ -9,7 +9,7 @@
     position: relative;
 
     .images {
-        img {
+        .image {
         	width: 100%;
         	position: absolute;
         	top: 0;
@@ -23,6 +23,8 @@
         z-index: 20;
         text-align: center;
         width: 100%;
+        top: 0;
+        left: 0;
 
         &.hover {
             @extend %hover;

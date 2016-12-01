@@ -6,7 +6,7 @@
 .slidester {
   width: 100%;
   position: relative; }
-  .slidester .images img {
+  .slidester .images .image {
     width: 100%;
     position: absolute;
     top: 0;
@@ -16,7 +16,9 @@
     position: absolute;
     z-index: 20;
     text-align: center;
-    width: 100%; }
+    width: 100%;
+    top: 0;
+    left: 0; }
     .slidester .captions .caption {
       display: none;
       width: 30%;

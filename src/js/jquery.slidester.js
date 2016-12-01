@@ -6,6 +6,8 @@
 		// Plugin default congifuration
 		var pluginName = "slidester",
 			defaults = {
+                width: null,
+                height: null,
                 direction: 1,
                 startSlide: 0,
                 animation: "fade",
@@ -49,7 +51,7 @@
                 this.load();
 			},
             initSlides: function() {
-                this.slideCount = $(this.element).find(".images img").size()-1;
+                this.slideCount = $(this._element).find(".images img").size()-1;
 
                 if (this.settings.startSlide <= this.slideCount) {
                     this.currentSlide = this.nextSlide = this.settings.startSlide;
@@ -88,7 +90,7 @@
                 $(this.element).html(wrapper);
 			},
             hideContent: function() {
-                $(this.element).find(".images img").hide();
+                $(this.element).find(".images .image").hide();
                 $(this.element).find(".text_boxes .text_box").hide();
             },
             load: function() {
@@ -168,21 +170,61 @@
                 this.fadeIn(this.settings.animationSpeed);
             },
             fadeIn: function(speed) {
-                $(this.element).find(".images img").eq(this.currentSlide).fadeIn(speed, "linear");
+                $(this.element).find(".images .image").eq(this.currentSlide).fadeIn(speed, "linear");
             },
             fadeOut: function(speed) {
-                $(this.element).find(".images img").eq(this.currentSlide).fadeOut(speed, "linear");
+                $(this.element).find(".images .image").eq(this.currentSlide).fadeOut(speed, "linear");
             },
 
             /**
              * Content wrappers, load images
              */
             createWrapper: function() {
-                return $("<div></div>").addClass("slidester").append(
-                    $("<div></div>").addClass("images").html(
-                        $(this._element).find(".images").html()
-                    )
+                return $("<div></div>").addClass("slidester").css({
+                    "width": this.settings.width,
+                    "height": "100%",
+                }).append(
+                    this.createImageWrapper()
                 );
+            },
+            createImageWrapper: function() {
+                if (this.settings.height) {
+                    return this.createFixedImageWrapper();
+                }
+
+                return this.createDynamicImageWrapper();
+            },
+            createFixedImageWrapper: function() {
+                // Creates a wrapper where images are loaded as backgorund in divisions
+                var fixedImgaeWrapper = $("<div></div>").addClass("images").css({
+                    "width": "100%",
+                    "height": "100%"
+                });
+
+                $(this._element).find(".images img").each(function() {
+                    fixedImgaeWrapper.append(
+                        $("<div></div>").addClass("image").css({
+                            "width": "100%",
+                            "height": "100%",
+                            "background-image": "url(" + this.src + ")",
+                            "background-size": "cover"
+                        })
+                    );
+                });
+
+                return fixedImgaeWrapper;
+            },
+            createDynamicImageWrapper: function() {
+                // Creates a wrapper where images are loaded as directly
+                var dynamicImgaeWrapper = $("<div></div>").addClass("images");
+
+                $(this._element).find(".images img").each(function() {
+                    dynamicImgaeWrapper.append(
+                        $("<img>").addClass("image").attr("src", this.src)
+                    );
+                });
+
+                return dynamicImgaeWrapper;
             },
             createButtonControlWrapper: function() {
                 var buttonControlWrapper = $("<div></div>").addClass("control-buttons").append(
@@ -201,7 +243,7 @@
                 var thumbnailControlWrapper = $("<div></div>").addClass("control-thumbnails");
 
                 for (var i=0; i<=this.slideCount; i++) {
-                    var thumbnail = $("<span></span>").addClass("thumbnail").css("background-image", "url(" + $(this.element).find(".images img").eq(i).attr("src") + ")");
+                    var thumbnail = $("<span></span>").addClass("thumbnail").css("background-image", "url(" + $(this._element).find(".images img").eq(i).attr("src") + ")");
 
                     if (i === this.currentSlide) {
                         thumbnail.addClass("active");
@@ -237,8 +279,6 @@
 
                 for (var i=0; i<=this.slideCount; i++) {
                     var caption = $("<div></div>").addClass("caption").html($(this.element).find(".captions .caption").eq(i).html());
-
-                    console.log($(this.element).find(".images img").eq(i).next("div.cation").html());
 
                     if (i === this.currentSlide) {
                         caption.addClass("active");
@@ -314,7 +354,7 @@
                 $(this.element).find(".captions .caption").eq(this.nextSlide).addClass("active");
             },
             setHeight: function(speed) {
-                var slideHeight = $(this.element).find(".images img").eq(this.currentSlide).height(),
+                var slideHeight = this.settings.height || $(this.element).find(".images img").eq(this.currentSlide).height(),
                     controlButton = $(this.element).find(".control-buttons"),
                     controlButtonHeight = controlButton.height(),
                     controlRadio = $(this.element).find(".control-radio"),
