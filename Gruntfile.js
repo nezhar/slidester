@@ -36,13 +36,6 @@ module.exports = function(grunt) {
 			}
 		},
 
-		jscs: {
-			src: "src/**/*.js",
-			options: {
-				config: ".jscsrc"
-			}
-		},
-
 		// Minify definitions
 		uglify: {
 			dist: {
@@ -120,7 +113,6 @@ module.exports = function(grunt) {
 
 	grunt.loadNpmTasks("grunt-contrib-concat");
 	grunt.loadNpmTasks("grunt-contrib-jshint");
-	grunt.loadNpmTasks("grunt-jscs");
 	grunt.loadNpmTasks("grunt-contrib-uglify");
     grunt.loadNpmTasks("grunt-contrib-sass");
     grunt.loadNpmTasks("grunt-contrib-cssmin");
@@ -130,7 +122,7 @@ module.exports = function(grunt) {
 
 	grunt.registerTask("travis", ["jshint", "karma:travis"]);
     grunt.registerTask("integrate", ["jshint", "karma:integrate"]);
-	grunt.registerTask("lint", ["jshint", "jscs"]);
+	grunt.registerTask("lint", ["jshint"]);
 	grunt.registerTask("build", ["concat", "uglify", "sass", "cssmin", "copy"]);
-	grunt.registerTask("default", ["build", "jshint", "karma:dev"]);
+	grunt.registerTask("default", ["build", "lint", "karma:dev"]);
 };
