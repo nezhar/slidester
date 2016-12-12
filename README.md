@@ -1,5 +1,7 @@
 # jQuery Slidester
 
+[![Build Status](https://travis-ci.org/nezhar/slidester.svg?branch=master)](https://travis-ci.org/nezhar/slidester)
+
 ### A jQuery plugin to create fancy sliders
 
 ..WIP..
