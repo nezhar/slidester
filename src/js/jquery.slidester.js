@@ -45,13 +45,26 @@
              * Initialization block
             */
 			init: function() {
-                this.initSlides();
-				this.initWrapper();
-                this.hideContent();
-                this.load();
+                try {
+                    this.initWrapper();
+                    this.initSlides();
+                    this.hideContent();
+                    this.load();
+                } catch(err) {
+                    console.log("Error: " + err + ".");
+                }
 			},
             initSlides: function() {
-                this.slideCount = $(this._element).find(".images img").size()-1;
+                // Check if the images container is defined
+                if (!$(this._element).find(".images").length) {
+                    throw "Images container not defined. Please define a cotainer with the slider images and assign the '.images' class to it";
+                }
+
+                if (!$(this._element).find(".images img").length) {
+                    throw "No slides defined in the image container";
+                }
+
+                this.slideCount = $(this._element).find(".images img").length-1;
 
                 if (this.settings.startSlide <= this.slideCount) {
                     this.currentSlide = this.nextSlide = this.settings.startSlide;
@@ -108,9 +121,13 @@
              * Slide Timer
             */
             startTimer: function() {
-                this.timer = setInterval((function() {
-                    this.slide(this.settings.direction);
-                }).bind(this), this.settings.slideSpeed);
+                this.timer = setInterval(
+                    function(scope) {
+                        scope.slide(scope.settings.direction);
+                    },
+                    this.settings.slideSpeed,
+                    this
+                );
             },
             stopTimer: function() {
                 clearInterval(this.timer);
@@ -428,6 +445,9 @@
                             break;
                         case "reload":
                             instance._reload();
+                            break;
+                        case undefined:
+                            // Skip if no option is passed
                             break;
                         default:
                             console.log("Invalid option: '" + options + "'");
