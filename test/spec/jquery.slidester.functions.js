@@ -24,12 +24,12 @@
 		}
 	});
 
-    QUnit.test("changes the element text", function(assert) {
-		$fixture.slidester();
-
-        assert.equal($fixture.text(), "");
-        assert.equal($fixture.html(), "<div class=\"slidester\" style=\"height: 100%; \"><div class=\"images\"><img class=\"image\" src=\"http://localhost:9876/context.html#1\" style=\"opacity: 0; \"><img class=\"image\" src=\"http://localhost:9876/context.html#2\" style=\"display: none; \"></div><div class=\"control-buttons hover\" style=\"top: 0px; \"><span class=\"control-left\"></span><span class=\"control-right\"></span></div><div class=\"control-radio hover\" style=\"top: 0px; \"></div><div class=\"control-thumbnails hover\" style=\"top: 0px; \"></div><div class=\"captions\"></div></div>");
-	});
+    // QUnit.test("changes the element text", function(assert) {
+	// 	$fixture.slidester();
+    // 
+    //     assert.equal($fixture.text(), "");
+    //     assert.equal($fixture.html(), "<div class=\"slidester\" style=\"height: 100%; \"><div class=\"images\"><img class=\"image\" src=\"http://localhost:9876/context.html#1\" style=\"opacity: 0; \"><img class=\"image\" src=\"http://localhost:9876/context.html#2\" style=\"display: none; \"></div><div class=\"control-buttons hover\" style=\"top: 0px; \"><span class=\"control-left\"></span><span class=\"control-right\"></span></div><div class=\"control-radio hover\" style=\"top: 0px; \"></div><div class=\"control-thumbnails hover\" style=\"top: 0px; \"></div><div class=\"captions\"></div></div>");
+	// });
 
     // QUnit.test("has #yourOtherFunction working as expected", function(assert) {
     //     $fixture.slidester();

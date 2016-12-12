@@ -59,7 +59,7 @@
                     this.hideContent();
                     this.load();
                 } catch(err) {
-                    console.log("Error: " + err + ".");
+                    $(this.element).html("Error: " + err + ".");
                 }
 			},
             initSlides: function() {
