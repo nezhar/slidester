@@ -14,7 +14,8 @@
 	<link rel="stylesheet" type="text/css" href="../dist/css/slidester.css">
 
     <!-- Demo CSS -->
-	<link rel="stylesheet" type="text/css" href="demo.css">
+	<link rel="stylesheet" type="text/css" href="css/demo.css">
+    <link rel="stylesheet" type="text/css" href="css/panels.css">
 </head>
 
 <body>
@@ -28,9 +29,8 @@
 				<li class="active dropdown">
 					<a href="examples.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Examples <span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="#">Simple</a></li>
-						<li><a href="#">Fullscreen</a></li>
-						<li><a href="#">Effects</a></li>
+						<li><a href="#basic">Basic</a></li>
+						<li><a href="#customized">Customized</a></li>
 					</ul>
 				</li>
                 <li class="dropdown">
@@ -51,65 +51,173 @@
 	</nav>
 
 	<div class="container">
-		<div class="row row-offcanvas row-offcanvas-right">
+		<div class="row row-offcanvas row-offcanvas-right docs">
+            <div class="row">
+				<div class="col-xs-12">
+                    <a name="basic"></a><h2>Basic Slider</h2>
+                </div>
+            </div>
 			<div class="row">
-				<div class="col-lg-12">
-                    <div class="col-xs-12">
-                        <h2>Sample Slider</h2>
-                        <div id="example1" class="slider">
-                          <div class="images">
-                              <img src="slides/6.jpg">
-                              <img src="slides/3.jpg">
-                              <img src="slides/4.jpg">
-                              <img src="slides/5.jpg">
-                          </div>
-                          <div class="captions">
-                              <div class="caption">
-                                  <div class="caption-top">
-                                      <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
-                                  </div>
-                                  <div class="caption-bottom">
-                                      <a href="#">Read more &raquo;</a>
-                                  </div>
-                              </div>
-                              <div class="caption">
-                                  <div class="caption-top">
-                                      <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-                                  </div>
-                                  <div class="caption-bottom">
-                                      <a href="#">Read ... &raquo;</a>
-                                  </div>
-                              </div>
-                              <div class="caption"><!-- Skip Caption --></div>
-                              <div class="caption">
-                                  <div class="caption-top">
-                                      <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
-                                  </div>
-                                  <div class="caption-bottom">
-                                      <a href="#">More ... &raquo;</a>
-                                  </div>
-                              </div>
-                          </div>
-                        </div>
+				<div class="col-lg-6 col-xs-12">
+                    <div id="example1" class="slider">
+                      <div class="images">
+                          <img src="slides/1.jpg">
+                          <img src="slides/2.jpg">
+                          <img src="slides/3.jpg">
+                          <img src="slides/4.jpg">
+                      </div>
                     </div>
 				</div>
+                <div class="col-lg-6 col-xs-12">
+                    <p>This is the most basic example of how you can use Slidester.</p>
+                    <b>Configuration:</b>
+                    <div class="panel with-nav-tabs panel-default">
+                        <div class="panel-heading">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#tab1basic" data-toggle="tab">JavaScript</a></li>
+                                    <li><a href="#tab2basic" data-toggle="tab">HTML</a></li>
+                                </ul>
+                        </div>
+                        <div class="panel-body">
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="tab1basic">
+<pre>$(function() {
+    $("#example1").slidester();
+}</pre>
+                                </div>
+                                <div class="tab-pane fade" id="tab2basic">
+<pre>
+&lt;div id=&quot;example1&quot; class=&quot;slider&quot;&gt;
+    &lt;div class=&quot;images&quot;&gt;
+        &lt;img src=&quot;slides/1.jpg&quot;&gt;
+        &lt;img src=&quot;slides/2.jpg&quot;&gt;
+        &lt;img src=&quot;slides/3.jpg&quot;&gt;
+        &lt;img src=&quot;slides/4.jpg&quot;&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 			</div>
+
+            <div class="row">
+				<div class="col-xs-12">
+                    <a name="customized"></a><h2>Customized Slider</h2>
+                </div>
+            </div>
 			<div class="row">
-				<div class="col-xs-6 col-lg-4">
-					<h2>Easy to use</h2>
-					<p>The usage is typcal to any jQuery plugin. Check the examples to see how the slider may cover the needs in your project.</p>
-					<p><a class="btn btn-primary" href="#" role="button">Examples &raquo;</a></p>
-				</div>
-				<div class="col-xs-6 col-lg-4">
-					<h2>Customizable</h2>
-					<p>The plugin allows for variouse custom configurations on each slider. The documnetation is describing all the available functionality.</p>
-					<p><a class="btn btn-primary" href="#" role="button">Documentation &raquo;</a></p>
-				</div>
-				<div class="col-xs-6 col-lg-4">
-					<h2>Open source</h2>
-					<p>The Slider is released under the MIT License, so fell free to fork it or use it however you need it. A coffee is always apreaciated :)</p>
-					<p><a class="btn btn-primary" href="#" role="button">Github &raquo;</a></p>
-				</div>
+                <div class="col-lg-6 col-xs-12">
+                    <p>You can also apply customized configrations to the slider so it gets closer to your requrenments. You have to do this is the ...</p>
+                    <b>Configuration:</b>
+
+                    <div class="panel with-nav-tabs panel-default">
+                        <div class="panel-heading">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#tab1default" data-toggle="tab">JavaScript</a></li>
+                                    <li><a href="#tab2default" data-toggle="tab">HTML</a></li>
+                                </ul>
+                        </div>
+                        <div class="panel-body">
+                            <div class="tab-content">
+                            <div class="tab-pane fade in active" id="tab1default">
+<pre>$("#example2").slidester({
+    direction: -1,
+    startSlide: 3,
+    animation: "fade",
+    initHeightSpeed: 1500,
+    initSlideSpeed: 1500,
+    heightSpeed: 1000,
+    slideSpeed: 4000,
+    animationSpeed: 2000,
+    pauseOnHover: true,
+    controlButtons: false,
+    controlRadio: true,
+    controlThumbnails: false,
+    captions: true,
+    captionsDisplayClass: null
+});</pre>
+                            </div>
+                            <div class="tab-pane fade" id="tab2default">
+<pre>
+&lt;div id=&quot;example2&quot; class=&quot;slider&quot;&gt;
+    &lt;div class=&quot;images&quot;&gt;
+        &lt;img src=&quot;slides/1.jpg&quot;&gt;
+        &lt;img src=&quot;slides/2.jpg&quot;&gt;
+        &lt;img src=&quot;slides/3.jpg&quot;&gt;
+        &lt;img src=&quot;slides/4.jpg&quot;&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;captions&quot;&gt;
+        &lt;div class=&quot;caption&quot;&gt;
+            &lt;div class=&quot;caption-top&quot;&gt;
+                &lt;p&gt;Lorem ipsum dolor sit amet, consetetur sadipscing elitr.&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;caption-bottom&quot;&gt;
+                &lt;a href=&quot;#&quot;&gt;Read more &amp;raquo;&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;caption&quot;&gt;
+            &lt;div class=&quot;caption-top&quot;&gt;
+                &lt;p&gt;Takimata sanctus est Lorem ipsum dolor sit amet.&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;caption-bottom&quot;&gt;
+                &lt;a href=&quot;#&quot;&gt;Read ... &amp;raquo;&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;caption&quot;&gt;&lt;!-- Skip Caption --&gt;&lt;/div&gt;
+        &lt;div class=&quot;caption&quot;&gt;
+            &lt;div class=&quot;caption-top&quot;&gt;
+                &lt;p&gt;Invidunt ut labore et dolore magna aliquyam erat.&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;caption-bottom&quot;&gt;
+                &lt;a href=&quot;#&quot;&gt;More ... &amp;raquo;&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xs-12">
+                    <div id="example2" class="slider">
+                      <div class="images">
+                          <img src="slides/1.jpg">
+                          <img src="slides/2.jpg">
+                          <img src="slides/3.jpg">
+                          <img src="slides/4.jpg">
+                      </div>
+                      <div class="captions">
+                          <div class="caption">
+                              <div class="caption-top">
+                                  <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr.</p>
+                              </div>
+                              <div class="caption-bottom">
+                                  <a href="#">Read more &raquo;</a>
+                              </div>
+                          </div>
+                          <div class="caption">
+                              <div class="caption-top">
+                                  <p>Takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                              </div>
+                              <div class="caption-bottom">
+                                  <a href="#">Read ... &raquo;</a>
+                              </div>
+                          </div>
+                          <div class="caption"><!-- Skip Caption --></div>
+                          <div class="caption">
+                              <div class="caption-top">
+                                  <p>Invidunt ut labore et dolore magna aliquyam erat.</p>
+                              </div>
+                              <div class="caption-bottom">
+                                  <a href="#">More ... &raquo;</a>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                </div>
 			</div>
 		</div>
 
@@ -123,37 +231,30 @@
 
 	<!-- jQuery -->
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <!-- Bootstrap -->
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<!-- Slidester  -->
 	<script src="../dist/js/jquery.slidester.js"></script>
 	<script>
 		$(function() {
-			$("#example1").slidester({
-                width: 800,
-                height: 400,
+			$("#example1").slidester();
+
+            $("#example2").slidester({
+                direction: -1,
+                startSlide: 3,
+                animation: "fade",
+                initHeightSpeed: 1500,
+                initSlideSpeed: 1500,
+                heightSpeed: 1000,
+                slideSpeed: 4000,
+                animationSpeed: 2000,
+                pauseOnHover: true,
+                controlButtons: false,
+                controlRadio: true,
+                controlThumbnails: false,
+                captions: true,
+                captionsDisplayClass: null
             });
-
-            // $("#element1").slidester({
-            // 	direction: 1,
-            //     startSlide: 1,
-            //     initHeightSpeed: 0,
-            //     initSlideSpeed: 0,
-            //     slideSpeed: 2500,
-            // });
-
-            // $("#element2").slidester({
-            //     direction: 1,
-            //     pauseOnHover: false,
-            //     controlButtons: false,
-            //     controlRadioDisplayClass: null,
-            // });
-
-            // setTimeout(function() {
-            //     $("#element1").slidester("reload");
-            // }, 7000);
-            //
-            // setTimeout(function() {
-            //     $("#element1").slidester("remove");
-            // }, 12000);
 		});
 	</script>
 </body>

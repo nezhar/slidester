@@ -54,8 +54,8 @@
             */
 			init: function() {
                 try {
-                    this.initWrapper();
                     this.initSlides();
+                    this.initWrapper();
                     this.hideContent();
                     this.load();
                 } catch(err) {

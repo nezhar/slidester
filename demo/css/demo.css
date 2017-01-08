@@ -13,3 +13,7 @@ footer {
 ul.nav li.dropdown:hover > ul.dropdown-menu {
     display: block;
 }
+
+.docs {
+    padding: 0 10px;
+}
